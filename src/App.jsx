@@ -1,4 +1,8 @@
 import React from "react";
+
+import { sum_1, sum_2 } from "./utils";
+sum_1(1, 2);
+
 //ES6
 const App = () => {
   return (
@@ -9,5 +13,3 @@ const App = () => {
 };
 
 export default App;
-
-

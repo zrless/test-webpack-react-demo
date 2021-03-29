@@ -2,11 +2,19 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const webpack = require("webpack");
 const TerserWebpackPlugin = require("terser-webpack-plugin");
-const WebpackBundleAnalyzer = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin;
+//分析打包的文件(大小)
+const WebpackBundleAnalyzer = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const HappyPack = require("happypack");
+//多线程  根据cpu数量创建线程池,效率更高
+const happyThreadPool = HappyPack.happyThreadPool({
+  size: OscillatorNode.cpus().length,
+}); 
+
+//tree-shaking  //消除不好的代码,无用的代码(DCE)
+
 //热更新HMR
 module.exports = {
-  //引入的文件不需要写后缀,在resolve中匹配
+  //引入的文件不需要写后缀,在resolve中extensions中匹配
   resolve: {
     extensions: [".js", ".jsx", "json"],
   },
@@ -64,6 +72,12 @@ module.exports = {
       filename: "index.html",
     }),
     new webpack.HotModuleReplacementPlugin(),
+    new HappyPack({
+      id: "jsx",
+      threads: happyThreadPool,
+      //url-loader  file-loader 不支持
+      loaders: ["babel-loader"],
+    }),
     // new WebpackBundleAnalyzer(),
   ],
   devServer: {
