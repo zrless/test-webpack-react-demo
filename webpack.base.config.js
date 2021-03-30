@@ -15,6 +15,10 @@ module.exports = {
   //引入的文件不需要写后缀,在resolve中extensions中匹配
   resolve: {
     extensions: [".js", ".jsx", "json"],
+    // 路径别名
+    alias: {
+      "@": path.resolve(__dirname, './src'),
+    },
   },
 
   entry: {
@@ -70,7 +74,7 @@ module.exports = {
       filename: "other.html",
       chunks: ["other", "common"],
     }),
-    
+
     new HappyPack({
       id: "jsx",
       //多线程  根据cpu数量创建线程池,效率更高
