@@ -4,11 +4,8 @@ const webpack = require("webpack");
 const TerserWebpackPlugin = require("terser-webpack-plugin");
 //分析打包的文件(大小)
 const WebpackBundleAnalyzer = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const os = require('os');
 const HappyPack = require("happypack");
-//多线程  根据cpu数量创建线程池,效率更高
-const happyThreadPool = HappyPack.happyThreadPool({
-  size: OscillatorNode.cpus().length,
-}); 
 
 //tree-shaking  //消除不好的代码,无用的代码(DCE)
 
@@ -74,7 +71,8 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new HappyPack({
       id: "jsx",
-      threads: happyThreadPool,
+      //多线程  根据cpu数量创建线程池,效率更高
+      threads: os.cpus().length,
       //url-loader  file-loader 不支持
       loaders: ["babel-loader"],
     }),
