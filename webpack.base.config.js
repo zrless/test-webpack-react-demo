@@ -3,8 +3,9 @@ const path = require("path");
 const webpack = require("webpack");
 const TerserWebpackPlugin = require("terser-webpack-plugin");
 //分析打包的文件(大小)
-const WebpackBundleAnalyzer = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
-const os = require('os');
+const WebpackBundleAnalyzer = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
+const os = require("os");
 const HappyPack = require("happypack");
 
 //tree-shaking  //消除不好的代码,无用的代码(DCE)
@@ -31,20 +32,38 @@ module.exports = {
       }),
     ],
   },
-  entry: path.resolve(__dirname, "./src/index.jsx"),
+  entry: {
+    //多入口
+    index: path.resolve(__dirname, "./src/index.jsx"),
+    other: path.resolve(__dirname, "./src/other.jsx"),
+  },
+
   output: {
     path: path.join(__dirname, "dist"), //必须是绝对路径
-    filename: "bundle.js", //打包文件名
+    filename: "[name].js", //打包文件名
   },
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        test: /\.(css|less)$/,
+        use: ["style-loader", "css-loader", "postcss-loader", "less-loader"],
       },
       {
-        test: /\.less$/,
-        use: ["style-loader", "css-loader", "less-loader"],
+        test: /\.(png|jpg)$/,
+        //比较小的图片会转成base64格式,可以减少http请求
+        //比较大的图片会跟file-loader一样,打包到文件夹,发送发送请求,防止页面首次渲染太慢
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              limit: 10 * 1024,
+              outputPath: "/img/",
+            },
+          },
+          // {
+          //   loader: "file-loader"
+          // },
+        ],
       },
       {
         test: /\.(js|mjs|jsx|ts|tsx)$/,
@@ -67,6 +86,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "/src/index.html"),
       filename: "index.html",
+      chunks: "[index]"
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, "/src/other.html"),
+      filename: "other.html",
+      chunks: "[other]"
     }),
     new webpack.HotModuleReplacementPlugin(),
     new HappyPack({

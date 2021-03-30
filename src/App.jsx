@@ -1,5 +1,6 @@
 import React from "react";
-
+import smallImage from  './static/img.jpg'
+import bigImage from  './static/logo.png'
 import { sum_1, sum_2 } from "./utils";
 sum_1(1, 2);
 
@@ -7,6 +8,8 @@ sum_1(1, 2);
 const App = () => {
   return (
     <div>
+      <div><img src={smallImage} alt=""/></div>
+      <div><img src={bigImage} alt=""/></div>
       <h1 className="h1">webpack-react 测试</h1>
     </div>
   );
