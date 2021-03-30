@@ -2,6 +2,7 @@ import React from "react";
 import smallImage from  './static/img.jpg'
 import bigImage from  './static/logo.png'
 import { sum_1, sum_2 } from "./utils";
+import _ from "lodash"
 sum_1(1, 2);
 
 //ES6

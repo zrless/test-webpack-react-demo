@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const webpack = require("webpack");
-const TerserWebpackPlugin = require("terser-webpack-plugin");
+
 //分析打包的文件(大小)
 const WebpackBundleAnalyzer = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
@@ -16,38 +16,15 @@ module.exports = {
   resolve: {
     extensions: [".js", ".jsx", "json"],
   },
-  optimization: {
-    minimizer: [
-      new TerserWebpackPlugin({
-        //加快打包速度
-        cache: true,
-        terserOptions: {
-          compress: {
-            unused: true,
-            drop_debugger: true,
-            drop_console: true,
-            dead_code: true,
-          },
-        },
-      }),
-    ],
-  },
+
   entry: {
     //多入口
     index: path.resolve(__dirname, "./src/index.jsx"),
     other: path.resolve(__dirname, "./src/other.jsx"),
   },
 
-  output: {
-    path: path.join(__dirname, "dist"), //必须是绝对路径
-    filename: "[name].js", //打包文件名
-  },
   module: {
     rules: [
-      {
-        test: /\.(css|less)$/,
-        use: ["style-loader", "css-loader", "postcss-loader", "less-loader"],
-      },
       {
         test: /\.(png|jpg)$/,
         //比较小的图片会转成base64格式,可以减少http请求
@@ -86,14 +63,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "/src/index.html"),
       filename: "index.html",
-      chunks: "[index]"
+      chunks: ["index", "vendor", "common"],
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "/src/other.html"),
       filename: "other.html",
-      chunks: "[other]"
+      chunks: ["other", "common"],
     }),
-    new webpack.HotModuleReplacementPlugin(),
+    
     new HappyPack({
       id: "jsx",
       //多线程  根据cpu数量创建线程池,效率更高
