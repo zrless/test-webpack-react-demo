@@ -16,7 +16,14 @@ const prodConfig = {
           //使用style-loader css样式会被打包到html的style标签里
           MiniCssExtractPlugin.loader,
           "css-loader",
-          "postcss-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: ["postcss-preset-env"],
+              },
+            },
+          },
           "less-loader",
         ],
       },
