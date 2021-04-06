@@ -115,6 +115,6 @@ module.exports = {
   },
   externals: {
     //拒绝jQuery被打包到bundle中
-    jquery: "jQuery"
+    // jquery: "jQuery"
   }
 };
