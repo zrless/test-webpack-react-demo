@@ -3,8 +3,8 @@ import smallImage from "@/static/img.jpg";
 import bigImage from "./static/logo.png";
 import { sum_1, sum_2 } from "./utils";
 import _ from "lodash";
-import $ from "jquery";
-console.log($);
+// import $ from "jquery";
+// console.log($);
 sum_1(1, 2);
 
 //ES6

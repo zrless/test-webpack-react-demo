@@ -37,7 +37,7 @@ const prodConfig = {
   ],
   //优化
   optimization: {
-    //压缩
+    //配置生产环境的压缩方案
     minimizer: [
       //压缩js
       new TerserWebpackPlugin({

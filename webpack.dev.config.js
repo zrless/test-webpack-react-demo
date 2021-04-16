@@ -25,9 +25,19 @@ const devConfig = {
       },
     ],
   },
+
   output: {
-    path: path.join(__dirname, "dist"), //必须是绝对路径
-    filename: "[name].js", //打包文件名
+    path: path.join(__dirname, "dist"), //输出资源的公共目录,必须是绝对路径
+    filename: "[name].js", //打包文件名(指定名称+目录)
+    publicPath: "/",        //所有资源引入公共路径前缀
+    chunkFilename: "[name]_chunk.js",   //非入口chunk名称
+    library: "[name]", //整个库对外暴露的变量名
+    /**
+     * libraryTarget为window   变量名添加到browser  
+     * libraryTarget为global   变量名添加到node
+     */
+    libraryTarget: "commonjs"
+
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
