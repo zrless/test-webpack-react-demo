@@ -36,7 +36,7 @@ const devConfig = {
      * libraryTarget为window   变量名添加到browser  
      * libraryTarget为global   变量名添加到node
      */
-    libraryTarget: "commonjs"
+    // libraryTarget: "commonjs"
 
   },
   plugins: [

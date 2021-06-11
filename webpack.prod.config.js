@@ -51,6 +51,7 @@ const prodConfig = {
             dead_code: true,
           },
         },
+        // sourceMap: true   //如果生产环境要生成sourceMap需要在TerserWebpackPlugin里添加配置
       }),
       //压缩css
       new OptimizeCssAssetsWebpackPlugin(),

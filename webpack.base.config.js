@@ -14,6 +14,7 @@ const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
 
 //热更新HMR
 module.exports = {
+  devtool: 'source-map',
   //解析模块规则
   resolve: {
     //引入的文件不需要写后缀,在resolve中extensions中匹配
@@ -58,7 +59,7 @@ module.exports = {
             loader: "url-loader",
             options: {
               limit: 10 * 1024,
-              outputPath: "/img/",
+              outputPath: "./img/",
             },
           },
           // {
@@ -129,35 +130,35 @@ module.exports = {
   ],
   devServer: {
     //运行代码的目录
-    contentBase: path.resolve(__dirname, "build"),
-    //监听contentBase下的所以文件,一旦文件变化就会reload
-    watchContentBase: true,
-    watchOptions: {
-      //监听忽略的文件
-      ignore: /node_modules/,
-    },
+    // contentBase: path.resolve(__dirname, "bundle"),
+    // //监听contentBase下的所以文件,一旦文件变化就会reload
+    // watchContentBase: true,
+    // watchOptions: {
+    //   //监听忽略的文件
+    //   ignore: /node_modules/,
+    // },
     hot: true,
-    port: 3000,
+    port: 3001,
     open: true,
     //启动gzip压缩
-    compress: true,
-    //不要显示启动服务器日志信息
-    clientLogLevel: "none",
-    //除了一些基本启动信息外,其他内容不显示
-    quiet: true,
-    //如果出错了不要全屏提示
-    overlay: false,
+    // compress: true,
+    // //不要显示启动服务器日志信息
+    // clientLogLevel: "none",
+    // //除了一些基本启动信息外,其他内容不显示
+    // quiet: true,
+    // //如果出错了不要全屏提示
+    // overlay: false,
     //服务器代理  解决开发环境的跨域问题
-    proxy: {
-      //服务器接收到/api/xxx的请求,就会吧请求转发给另一个服务器
-      "/api": {
-        target: "http://localhost:3000",
-        //发送请求时,路径重写,将/api/xxx改为/xxx
-        pathRewrite: {
-          "^/api": "",
-        },
-      },
-    },
+    // proxy: {
+    //   //服务器接收到/api/xxx的请求,就会吧请求转发给另一个服务器
+    //   "/api": {
+    //     target: "http://localhost:3001",
+    //     //发送请求时,路径重写,将/api/xxx改为/xxx
+    //     pathRewrite: {
+    //       "^/api": "",
+    //     },
+    //   },
+    // },
   },
   externals: {
     //拒绝jQuery被打包到bundle中
