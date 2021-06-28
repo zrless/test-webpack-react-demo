@@ -13,8 +13,9 @@ const prodConfig = {
       {
         test: /\.(css|less)$/,
         use: [
+          "style-loader", 
           //使用style-loader css样式会被打包到html的style标签里
-          MiniCssExtractPlugin.loader,
+          // MiniCssExtractPlugin.loader,  
           "css-loader",
           {
             loader: "postcss-loader",
@@ -31,9 +32,9 @@ const prodConfig = {
   },
   plugins: [
     //抽离css到css文件夹
-    new MiniCssExtractPlugin({
-      filename: "css/main.[contentHash:8].css", //[contentHash:8]  8位的内容hash
-    }),
+    // new MiniCssExtractPlugin({
+    //   filename: "css/main.[contentHash:8].css", //[contentHash:8]  8位的内容hash
+    // }),
   ],
   //优化
   optimization: {
@@ -51,7 +52,7 @@ const prodConfig = {
             dead_code: true,
           },
         },
-        // sourceMap: true   //如果生产环境要生成sourceMap需要在TerserWebpackPlugin里添加配置
+        //sourceMap: true   //如果生产环境要生成sourceMap需要在TerserWebpackPlugin里添加配置
       }),
       //压缩css
       new OptimizeCssAssetsWebpackPlugin(),

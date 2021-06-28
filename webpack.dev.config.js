@@ -28,7 +28,7 @@ const devConfig = {
 
   output: {
     path: path.join(__dirname, "dist"), //输出资源的公共目录,必须是绝对路径
-    filename: "[name].js", //打包文件名(指定名称+目录)
+    filename: "[name][hash].js", //打包文件名(指定名称+目录)
     publicPath: "/",        //所有资源引入公共路径前缀
     chunkFilename: "[name]_chunk.js",   //非入口chunk名称
     library: "[name]", //整个库对外暴露的变量名
@@ -50,6 +50,11 @@ const devConfig = {
       filepath: path.resolve(__dirname, "dll/jquery.js"),
     }),
   ],
+  devServer: {
+    hot: true,
+    port: 3000,
+    open: true
+  }
 };
 
 module.exports = merge(baseConfig, devConfig);

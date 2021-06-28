@@ -112,7 +112,6 @@ module.exports = {
       /**
        * 1.帮助servicework快速启动
        * 2.删除旧的servicework
-       *
        * 生成一个service-work.js文件
        */
       clientsClaim: true,
@@ -126,7 +125,7 @@ module.exports = {
       //url-loader  file-loader 不支持
       loaders: ["babel-loader"],
     }),
-    // new WebpackBundleAnalyzer(),
+    new WebpackBundleAnalyzer(),
   ],
   devServer: {
     //运行代码的目录
@@ -140,6 +139,8 @@ module.exports = {
     hot: true,
     port: 3001,
     open: true,
+    //支持https
+    // https: true,
     //启动gzip压缩
     // compress: true,
     // //不要显示启动服务器日志信息
