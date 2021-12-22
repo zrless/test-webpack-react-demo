@@ -1,14 +1,14 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const path = require("path");
-const webpack = require("webpack");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
 
 //分析打包的文件(大小)
-const WebpackBundleAnalyzer = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin;
-const os = require("os");
-const HappyPack = require("happypack");
+const WebpackBundleAnalyzer =
+  require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const os = require('os');
+const HappyPack = require('happypack');
 
-const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
+const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 
 //tree-shaking  //消除不好的代码,无用的代码(DCE)
 
@@ -18,13 +18,13 @@ module.exports = {
   //解析模块规则
   resolve: {
     //引入的文件不需要写后缀,在resolve中extensions中匹配
-    extensions: [".js", ".jsx", "json"],
+    extensions: ['.js', '.jsx', 'json'],
     // 路径别名
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      '@': path.resolve(__dirname, './src'),
     },
     //解析模块去找哪个目录
-    modules: [path.resolve(__dirname, "./node_modules"), "node_modules"],
+    modules: [path.resolve(__dirname, './node_modules'), 'node_modules'],
   },
   /**
    * entry: 入口
@@ -44,8 +44,8 @@ module.exports = {
 
   entry: {
     //多入口
-    index: path.resolve(__dirname, "./src/index.jsx"),
-    other: path.resolve(__dirname, "./src/other.jsx"),
+    index: path.resolve(__dirname, './src/index.jsx'),
+    other: path.resolve(__dirname, './src/other.jsx'),
   },
 
   module: {
@@ -56,10 +56,10 @@ module.exports = {
         //比较大的图片会跟file-loader一样,打包到文件夹,发送发送请求,防止页面首次渲染太慢
         use: [
           {
-            loader: "url-loader",
+            loader: 'url-loader',
             options: {
               limit: 10 * 1024,
-              outputPath: "./img/",
+              outputPath: './img/',
             },
           },
           // {
@@ -78,12 +78,12 @@ module.exports = {
            */
           // "thread-loader",
           {
-            loader: "babel-loader",
+            loader: 'babel-loader',
             options: {
               babelrc: false,
               presets: [
-                require.resolve("@babel/preset-react"),
-                [require.resolve("@babel/preset-env", { modules: false })],
+                require.resolve('@babel/preset-react'),
+                [require.resolve('@babel/preset-env', { modules: false })],
               ],
               // cacheDirectory: true,    //编译的内容加缓存提高性能
             },
@@ -94,18 +94,28 @@ module.exports = {
           // }
         ],
       },
+      {
+        test: /\.txt$/,
+        exclude: /node_modules/,
+        use: {
+          loader: path.resolve(__dirname, './myWebpackLoader/txt-loader.js'),
+          options: {
+            name: 'Rico',
+          },
+        },
+      },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "./src/index.html"),
-      filename: "index.html",
-      chunks: ["index", "vendor", "common"],
+      template: path.resolve(__dirname, './src/index.html'),
+      filename: 'index.html',
+      chunks: ['index', 'vendor', 'common'],
     }),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "./src/other.html"),
-      filename: "other.html",
-      chunks: ["other", "common"],
+      template: path.resolve(__dirname, './src/other.html'),
+      filename: 'other.html',
+      chunks: ['other', 'common'],
     }),
     //离线访问
     new WorkboxWebpackPlugin.GenerateSW({
@@ -119,11 +129,11 @@ module.exports = {
     }),
 
     new HappyPack({
-      id: "jsx",
+      id: 'jsx',
       //多线程  根据cpu数量创建线程池,效率更高
-      threads: os.cpus().length,
+      threads: os.cpus().length - 1,
       //url-loader  file-loader 不支持
-      loaders: ["babel-loader"],
+      loaders: ['babel-loader'],
     }),
     new WebpackBundleAnalyzer(),
   ],

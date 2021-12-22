@@ -1,10 +1,9 @@
 const baseConfig = require('./webpack.base.config');
 const path = require('path');
 const merge = require('webpack-merge').smart;
-const TerserWebpackPlugin = require('terser-webpack-plugin');
-// 抽离css
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
+const TerserWebpackPlugin = require('terser-webpack-plugin'); //压缩js
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');// 抽离css
+const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin'); //压缩css
 const OutputText = require('./myWebpackPlugin/output-text');
 
 const prodConfig = {
