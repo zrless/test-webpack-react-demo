@@ -10,18 +10,18 @@ if (module.hot) {
   });
 }
 
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker
-      .register("/service-worker.js")
-      .then(() => {
-        console.log("sw注册成功");
-      })
-      .catch(() => {
-        console.log("sw注册失败");
-      });
-  });
-}
+// if ("serviceWorker" in navigator) {
+//   window.addEventListener("load", () => {
+//     navigator.serviceWorker
+//       .register("/service-worker.js")
+//       .then(() => {
+//         console.log("sw注册成功");
+//       })
+//       .catch(() => {
+//         console.log("sw注册失败");
+//       });
+//   });
+// }
 
 const Index = () => {
   return (
@@ -31,4 +31,4 @@ const Index = () => {
     </div>
   );
 };
-ReactDom.render(<Index />, document.getElementById("app"));
+ReactDom.render(<Index />, document.getElementById("index"));
